@@ -66,22 +66,22 @@
         <a href="inputpenjualan.php"><button class="btn btn-primary"><span class="fa fa-plus-circle"></span> Tambah Barang Baru</button></a>
       </div>
       <div class="col-12">
-      <?php
-      if (isset($_GET['alert'])) {
-        if ($_GET['alert']==1) {
-          ?>
-          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>Data berhasil diubah!</strong>.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <?php
+        <?php
+        if (isset($_GET['alert'])) {
+          if ($_GET['alert']==1) {
+            ?>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>Data berhasil diubah!</strong>.
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <?php
+          }
         }
-      }
 
 
-      ?>
+        ?>
       </div>
     </div>
     <div class="table-responsive">
@@ -133,8 +133,9 @@
             <td><?php echo $data['tgl_penjualan']; ?></td>
             <td><?php echo $data['nama_akun']; ?></td>
             <td>
-              <a href="inputpenjualan.php?kodebarang=<?php echo $data[0]; ?>" title="Jual Barang"><button class="btn btn-success btn-sm"><span class="fa fa-shopping-cart"></span></button></a>
-              <button class="btn btn-warning btn-sm ubahdata" id="<?php echo $data[0]; ?>"><span class="fa fa-edit"></span></button>
+
+
+              <button class="btn btn-danger btn-sm ubahdata" title="Edit Penjualan" id="<?php echo $data['kode_penjualan']; ?>"><span class="fa fa-edit"></span></button>
             </td>
           </tr>
 
@@ -155,7 +156,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ubah Data Barang</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Ubah Data Penjualan</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -163,52 +164,48 @@
         <div class="modal-body">
           <div class="container">
             <div class="row">
-             <form class="form" method="post" action="ubahbarang.php">
+             <form class="form" method="post" action="ubahpenjualan.php">
               <div class="row">
-                <div class="form-group col-sm-4">
-                  <input type="hidden" name="kode_barang" id="kode_barang">
-                  <label for="nama_barang">Nama Barang</label>
-                  <input class="form-control" id="nama_barang" type="text" name="nama_barang" title="Misal: Legion Y720" required/>
-                  <small class="form-text text-muted">Kode Barang / Type Model / MTM / SKU.</small>
+                <input type="hidden" name="kode_penjualan" id="kode_penjualan">
+
+                <div class="form-group col-sm">
+                  <label for="harga_penjualan">Harga Penjualan</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Rp. </span>
+                    </div>
+                    <input id="harga_penjualan" type="number" class="form-control" aria-label="Harga Satuan" name="harga_jual" required="">
+                    <div class="input-group-append">
+                      <span class="input-group-text">.-</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group col">
-                  <label for="deskripsi">Deskripsi</label>
-                  <input class="form-control form-control" type="text" name="deskripsi" id="deskripsi" placeholder="Spesifikasi, SKU"  title="Misal: RAM, HDD, SSD, Windows" required>
-                </div>
+                
               </div>
               <div class="row">
-                <div class="form-group col-sm-3">
-                  <label for="stok">Stok</label>
-                  <input type="number" name="stok" id="stok" class="form-control" placeholder="Masukan Stok Barang." required="">
-                </div>
 
-                <div class="form-group col-sm-4">
-                  <label for="brand">Brand / Merk</label>
-                  <select id="brand" class="form-control" name="brand">
-                    <option value="Asus">Asus</option>
-                    <option value="Lenovo">Lenovo</option>
-                    <option value="Acer">Acer</option>
-                    <option value="HP">HP</option>
-                    <option value="Dell">Dell</option>
-                    <option value="Zyrex">Zyrex</option>
-                    <option value="Lainnya">Lainnya</option>
+                <div class="form-group col-sm-7">
+                  <label for="jenis_penjualan">Jenis Penjualan</label>
+                  <select id="jenis_penjualan" class="form-control">
+                    <option value="Offline">Offline (Langsung)</option>
+                    <option value="Online">Online (eCommerce)</option>
                   </select>
                 </div>
 
                 <div class="form-group col-sm">
-                  <label for="komisi">Komisi Penjualan</label>
-                  <input class="form-control form-control" id="komisi" name="komisi" type="number" required>
+                  <label for="jumlah">Jumlah</label>
+                  <input class="form-control form-control" type="number" required id="jumlah">
 
                 </div>
               </div>
               <div class="row">
-                <div class="form-group col-5">
-                  <label for="harga_modal">Harga Modal (M.1)</label>
-                  <input type="number" class="form-control" id="harga_modal" name="harga_modal" required="">
+                <div class="form-group col-6">
+                  <label for="komisi">Komisi</label>
+                  <input type="number" readonly class="form-control form-control-plaintext" id="komisi" name="komisi" placeholder="-">
                 </div>
                 <div class="form-group col">
-                  <label for="harga_m2">Harga Min. Jual Offline (M.2)</label>
-                  <input type="number" class="form-control" id="harga_m2" name="harga_m2" required="">
+                  <label for="margin">Margin</label>
+                  <input type="number" class="form-control" readonly id="margin" name="margin" placeholder="-">
                 </div>
 
               </div>
@@ -247,34 +244,30 @@
 
 <script text="text/javascript">
   $(document).ready(function () {
-    
+
     var table = $('#dataTable').DataTable();
- 
+
     $('div.dataTables_filter input', table.table().container()).focus();
 
     $(document).on('click','.ubahdata', function () {
-      var kode_barang=$(this).attr("id");
+      var kode_penjualan=$(this).attr("id");
       $('#exampleModal').modal('show');
 
       var modal = $('#exampleModal')
-      modal.find('.modal-title').text('Ubah Data Barang');
-      modal.find('.modal-body input#kode_barang').val(kode_barang);
+      modal.find('.modal-title').text('Ubah Data Penjualan');
+      modal.find('.modal-body input#kode_penjualan').val(kode_penjualan);
 
       $.ajax({
         method:"POST",
-        url:"readbarang.php",
-        data:{kode_barang:kode_barang},
+        url:"readpenjualan.php",
+        data:{kode_penjualan:kode_penjualan},
         dataType:"json",
         success:function(data){
-          modal.find('.modal-title').text('Edit Data Barang, dengan Kode Barang : ' + kode_barang);
-          modal.find('.modal-body input#nama_barang').val(data.nama_barang);
-          modal.find('.modal-body input#deskripsi').val(data.deskripsi);
-          modal.find('.modal-body input#stok').val(data.stok);
-          modal.find('.modal-body select#brand').val(data.brand);
-          modal.find('.modal-body input#harga_modal').val(data.harga_modal);
-          modal.find('.modal-body input#harga_m2').val(data.harga_m2);
-          modal.find('.modal-body input#komisi').val(data.komisi);
-          modal.find('.modal-body input#kode_barang').val(data.kode_barang);
+          modal.find('.modal-title').text('Edit Data Penjualan, dengan Kode : ' + kode_penjualan);
+          modal.find('.modal-body input#harga_penjualan').val(data.harga_penjualan);
+          modal.find('.modal-body input#jenis_penjualan').val(data.jenis_penjualan);
+          modal.find('.modal-body input#jumlah').val(data.jumlah);
+          modal.find('.modal-body input#komisi').val(data.komisi*data.jumlah);
 
                   //menampilkan data ke dalam modal
                 }
@@ -291,14 +284,14 @@
 
   });
 
-function hapus() {
-  var r = confirm("Apakah yakin Mau Menghapus Data Barang! Setelah dihapus, data tidak dapat dipulihkan.");
-  if (r == true) {
-    return true;
-  } else {
-    return false;
+  function hapus() {
+    var r = confirm("Apakah yakin Mau Menghapus Data Barang! Setelah dihapus, data tidak dapat dipulihkan.");
+    if (r == true) {
+      return true;
+    } else {
+      return false;
+    }
   }
-}
 
 
 </script>
