@@ -3,7 +3,7 @@
   <title>Lihat Semua Penjualan</title>
   <!-- Custom fonts for this template -->
 
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
   <!-- Jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   
@@ -60,10 +60,10 @@
         <h3><span class="fa fa-cash-register"></span> Data Penjualan</h3><br>
       </div>
       <div class="col-3">
-        <a href="lihatpenjualan.php"><button class="btn btn-primary"><span class="fa fa-sync-alt"></span> Refresh Data (F5)</button></a>
+        <a href="lihatpenjualan.php"><button class="btn btn-info"><span class="fa fa-sync-alt"></span> Refresh Data (F5)</button></a>
       </div>
       <div class="col-3">
-        <a href="inputpenjualan.php"><button class="btn btn-danger"><span class="fa fa-plus-circle"></span> Tambah Barang Baru</button></a>
+        <a href="inputpenjualan.php"><button class="btn btn-primary"><span class="fa fa-plus-circle"></span> Tambah Barang Baru</button></a>
       </div>
       <div class="col-12">
       <?php
@@ -88,27 +88,29 @@
      <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
       <thead>
         <tr>
-          <th title="Kode Barang">#</th>
+          <th title="Kode Penjualan">#</th>
           <th>Nama Barang</th>
-          <th>Deskripsi</th>
-          <th>Stok</th>
-          <th>Brand</th>
-          <th>Harga Modal</th>
-          <th>Harga M.2</th>
+          <th>Harga Penjualan</th>
+          <th>Jenis</th>
+          <th>Jumlah</th>
           <th>Komisi</th>
+          <th>Margin</th>
+          <th>Tanggal</th>
+          <th>Akun</th>
           <td><span class="fa fa-cogs"></span></td>
         </tr>
       </thead>
       <tfoot>
         <tr>
-          <th title="Kode Barang">Kode</th>
+          <th title="Kode Penjualan">#</th>
           <th>Nama Barang</th>
-          <th>Deskripsi</th>
-          <th>Stok</th>
-          <th>Brand</th>
-          <th>Harga Modal</th>
-          <th>Harga M.2</th>
+          <th>Harga Penjualan</th>
+          <th>Jenis</th>
+          <th>Jumlah</th>
           <th>Komisi</th>
+          <th>Margin</th>
+          <th>Tanggal</th>
+          <th>Akun</th>
           <th><span class="fa fa-cogs"></span></th>
         </tr>
       </tfoot>
@@ -117,18 +119,19 @@
 
         <?php 
         include_once 'koneksi.php';
-        $databarang=mysqli_query($conn, 'SELECT * FROM data_barang');
-        while ($data=mysqli_fetch_row($databarang)) {
+        $datapenjualan=mysqli_query($conn, 'SELECT * FROM data_barang, data_penjualan, data_akun WHERE data_penjualan.kode_barang = data_barang.kode_barang and data_penjualan.id_akun = data_akun.id_akun');
+        while ($data=mysqli_fetch_array($datapenjualan)) {
           ?>
           <tr>
-            <td><?php echo $data[0]; ?></td>
-            <td><?php echo $data[1]; ?></td>
-            <td><?php echo $data[2]; ?></td>
-            <td><?php echo $data[3]; ?></td>
-            <td><?php echo $data[4]; ?></td>
-            <td><?php echo number_format($data[5],0,",","."); ?></td>
-            <td><?php echo number_format($data[6],0,",","."); ?></td>
-            <td><?php echo number_format($data[7],0,",","."); ?></td>
+            <td><?php echo $data['kode_penjualan']; ?></td>
+            <td><?php echo $data['nama_barang']; ?></td>
+            <td><?php echo number_format($data['harga_penjualan'],0,",","."); ?></td>
+            <td><?php echo $data['jenis_penjualan']; ?></td>
+            <td><?php echo $data['jumlah']; ?></td>
+            <td><?php echo number_format($data['komisi']*$data['jumlah'],0,",","."); ?></td>
+            <td><?php echo number_format($data['harga_penjualan']-$data['harga_modal'],0,",","."); ?></td>
+            <td><?php echo $data['tgl_penjualan']; ?></td>
+            <td><?php echo $data['nama_akun']; ?></td>
             <td>
               <a href="inputpenjualan.php?kodebarang=<?php echo $data[0]; ?>" title="Jual Barang"><button class="btn btn-success btn-sm"><span class="fa fa-shopping-cart"></span></button></a>
               <button class="btn btn-warning btn-sm ubahdata" id="<?php echo $data[0]; ?>"><span class="fa fa-edit"></span></button>
