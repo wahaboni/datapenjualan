@@ -6,6 +6,8 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
   <!-- Jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script type="text/javascript" src="js/number-divider.min.js"></script>
   
   <!-- Custom styles for this page -->
   
@@ -167,6 +169,7 @@
              <form class="form" method="post" action="ubahpenjualan.php">
               <div class="row">
                 <input type="hidden" name="kode_penjualan" id="kode_penjualan">
+                <input type="hidden" name="harga_modal" id="harga_modal">
 
                 <div class="form-group col-sm">
                   <label for="harga_penjualan">Harga Penjualan</label>
@@ -174,7 +177,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Rp. </span>
                     </div>
-                    <input id="harga_penjualan" type="number" class="form-control" aria-label="Harga Satuan" name="harga_jual" required="">
+                    <input id="harga_penjualan" type="number" class="form-control" aria-label="Harga Satuan" name="harga_jual" required="" placeholder="">
                     <div class="input-group-append">
                       <span class="input-group-text">.-</span>
                     </div>
@@ -184,12 +187,12 @@
               </div>
               <div class="row">
 
-                <div class="form-group col-sm-7">
-                  <label for="jenis_penjualan">Jenis Penjualan</label>
-                  <select id="jenis_penjualan" class="form-control">
-                    <option value="Offline">Offline (Langsung)</option>
-                    <option value="Online">Online (eCommerce)</option>
-                  </select>
+                <div class="form-group col-sm-8">
+                   <label for="jenis_penjualan">Jenis Penjualan</label>
+                <select id="jenis_penjualan" class="form-control">
+                  <option value="Offline">Offline (Langsung)</option>
+                  <option value="Online">Online (eCommerce)</option>
+                </select>
                 </div>
 
                 <div class="form-group col-sm">
@@ -200,11 +203,11 @@
               </div>
               <div class="row">
                 <div class="form-group col-6">
-                  <label for="komisi">Komisi</label>
+                  <label for="komisi">Jumlah Komisi</label>
                   <input type="number" readonly class="form-control form-control-plaintext" id="komisi" name="komisi" placeholder="-">
                 </div>
                 <div class="form-group col">
-                  <label for="margin">Margin</label>
+                  <label for="margin">Margin /unit</label>
                   <input type="number" class="form-control" readonly id="margin" name="margin" placeholder="-">
                 </div>
 
@@ -265,15 +268,24 @@
         success:function(data){
           modal.find('.modal-title').text('Edit Data Penjualan, dengan Kode : ' + kode_penjualan);
           modal.find('.modal-body input#harga_penjualan').val(data.harga_penjualan);
-          modal.find('.modal-body input#jenis_penjualan').val(data.jenis_penjualan);
+          modal.find('.modal-body input#harga_penjualan').attr('placeholder',data.harga_penjualan);
+          modal.find('.modal-body select#jenis_penjualan').val(data.jenis_penjualan);
           modal.find('.modal-body input#jumlah').val(data.jumlah);
+          modal.find('.modal-body input#harga_modal').val(data.harga_modal);
+
           modal.find('.modal-body input#komisi').val(data.komisi*data.jumlah);
 
+          modal.find('.modal-body input#margin').val((data.harga_penjualan-data.harga_modal)*data.jumlah);
+
                   //menampilkan data ke dalam modal
-                }
-
-
+          }
         }); // Punya Ajax
+          
+        $(modal.find('.modal-body input#harga_penjualan')).keyup(function () {
+          var harga_modal = modal.find('.modal-body input#harga_modal').val()
+        var hitung = $(this).val() - harga_modal
+        modal.find('.modal-body input#margin').val(hitung)
+      })
 
       
 
