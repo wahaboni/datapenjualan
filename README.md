@@ -12,4 +12,5 @@ Terdiri dari Menu
 - Multi ID beberapa toko dengan masing2 dibuatkan Hak Akses nya.
 
 ** Masih dalam tahap Pengembangan & Penyempurnaan **
----- Bantu kami masukan untuk penyempurnaan program --
+
+--- Bantu kami masukan untuk penyempurnaan program --
