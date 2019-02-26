@@ -172,12 +172,12 @@
                 <input type="hidden" name="harga_modal" id="harga_modal">
 
                 <div class="form-group col-sm">
-                  <label for="harga_penjualan">Harga Penjualan</label>
+                  <label for="harga_penjualan">Harga Penjualan (Satuan)</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Rp. </span>
                     </div>
-                    <input id="harga_penjualan" type="number" class="form-control" aria-label="Harga Satuan" name="harga_jual" required="" placeholder="">
+                    <input id="harga_penjualan" type="number" class="form-control" aria-label="Harga Penjualan Satuan" name="harga_penjualan" required="" placeholder="">
                     <div class="input-group-append">
                       <span class="input-group-text">.-</span>
                     </div>
@@ -189,7 +189,7 @@
 
                 <div class="form-group col-sm-8">
                    <label for="jenis_penjualan">Jenis Penjualan</label>
-                <select id="jenis_penjualan" class="form-control">
+                <select id="jenis_penjualan" class="form-control" name="jenis_penjualan">
                   <option value="Offline">Offline (Langsung)</option>
                   <option value="Online">Online (eCommerce)</option>
                 </select>

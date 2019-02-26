@@ -2,17 +2,14 @@
 
 if (isset($_POST['kode_penjualan']) && $_POST['tombol']=="Ubah") {
 	$kode_penjualan=$_POST['kode_penjualan'];
-	$nama_barang=$_POST['nama_barang'];
-	$deskripsi=$_POST['deskripsi'];
-	$stok=$_POST['stok'];
-	$brand=$_POST['brand'];
-	$harga_modal=$_POST['harga_modal'];
-	$harga_m2=$_POST['harga_m2'];
-	$komisi=$_POST['komisi'];
+	$harga_penjualan=$_POST['harga_penjualan'];
+	$jenis_penjualan=$_POST['jenis_penjualan'];
+	$jumlah=$_POST['jumlah'];
+	
 	include 'koneksi.php';
-	$query="UPDATE data_barang SET nama_barang='$nama_barang',deskripsi='$deskripsi',stok='$stok',brand='$brand',harga_modal='$harga_modal',harga_m2='$harga_m2',komisi='$komisi' WHERE kode_penjualan='$kode_penjualan' ";
+	$query="UPDATE data_penjualan SET harga_penjualan='$harga_penjualan', jenis_penjualan='$jenis_penjualan', jumlah='$jumlah'  WHERE kode_penjualan='$kode_penjualan' ";
 	if (mysqli_query($conn, $query)) {
-		header("location:lihatbarang.php?alert=1");
+		header("location:lihatpenjualan.php?alert=1");
 	} else {
 		echo mysql_errno();
 	}
