@@ -7,7 +7,6 @@
   <!-- Jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-  <script type="text/javascript" src="js/number-divider.min.js"></script>
   
   <!-- Custom styles for this page -->
   
@@ -72,7 +71,7 @@
         if (isset($_GET['alert'])) {
           if ($_GET['alert']==1) {
             ?>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
               <strong>Data berhasil diubah!</strong>.
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -166,7 +165,7 @@
         <div class="modal-body">
           <div class="container">
             <div class="row">
-             <form class="form" method="post" action="ubahpenjualan.php">
+             <form class="form" method="get" action="ubahpenjualan.php">
               <div class="row">
                 <input type="hidden" name="kode_penjualan" id="kode_penjualan">
                 <input type="hidden" name="harga_modal" id="harga_modal">
@@ -197,18 +196,18 @@
 
                 <div class="form-group col-sm">
                   <label for="jumlah">Jumlah</label>
-                  <input class="form-control form-control" type="number" required id="jumlah">
-
+                  <input class="form-control form-control" type="number" required id="jumlah" name="jumlah">
+            
                 </div>
               </div>
               <div class="row">
                 <div class="form-group col-6">
-                  <label for="komisi">Jumlah Komisi</label>
+                  <label for="komisi" id="lblkomisi">Komisi</label>
                   <input type="number" readonly class="form-control form-control-plaintext" id="komisi" name="komisi" placeholder="-">
                 </div>
                 <div class="form-group col">
-                  <label for="margin">Margin /unit</label>
-                  <input type="number" class="form-control" readonly id="margin" name="margin" placeholder="-">
+                  <label for="margin" id="lblmargin">Margin</label>
+                  <input type="number" class="form-control" readonly id="margin" placeholder="-">
                 </div>
 
               </div>
@@ -272,9 +271,10 @@
           modal.find('.modal-body select#jenis_penjualan').val(data.jenis_penjualan);
           modal.find('.modal-body input#jumlah').val(data.jumlah);
           modal.find('.modal-body input#harga_modal').val(data.harga_modal);
-
+          modal.find('.modal-body label#lblkomisi').html('Komisi/Unit: '+data.komisi+',<br><b>Total Komisi</b>:');
           modal.find('.modal-body input#komisi').val(data.komisi*data.jumlah);
 
+          modal.find('.modal-body label#lblmargin').html('Margin/Unit:'+data.harga_penjualan-data.harga_modal);
           modal.find('.modal-body input#margin').val((data.harga_penjualan-data.harga_modal)*data.jumlah);
 
                   //menampilkan data ke dalam modal
