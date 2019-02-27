@@ -97,7 +97,7 @@
           <th>Komisi</th>
           <th>Margin</th>
           <th>Tanggal</th>
-          <th>Akun</th>
+          <th>Penjual</th>
           <td><span class="fa fa-cogs"></span></td>
         </tr>
       </thead>
@@ -111,7 +111,7 @@
           <th>Komisi</th>
           <th>Margin</th>
           <th>Tanggal</th>
-          <th>Akun</th>
+          <th>Penjual</th>
           <th><span class="fa fa-cogs"></span></th>
         </tr>
       </tfoot>
