@@ -359,7 +359,7 @@
                 $('button.simpandata').attr('disabled','true');
                 $('#ModalWarning').modal('show');
                 var modalwarn = $('#ModalWarning')
-                modalwarn.find('.modal-title').text('Stok Habis.');
+                modalwarn.find('.modal-title').html('<i class="fa fa-exclamation-triangle"></i> Peringatan! Stok Barang Habis.');
                 modalwarn.find('.modal-body').html('Tidak dapat Melakukan Penjualan apabila Stok Habis.');
               } else {
                 $('button.simpandata').removeAttr('disabled');
@@ -397,7 +397,7 @@
                 $('input#kode_barang').val(data.kode_barang);
                 $('input#nama_barang').val(data.nama_barang+' -> '+data.deskripsi);
                 $('input#harga_modal').val(data.harga_modal);
-                $('input#harga_m2').val(data.harga_m2);
+                $('input#harga_m2').val(data.harga_m2).toLocaleString();
                 $('input#stok').val(data.stok);
                 $('input#jumlah').attr('max',data.stok);
 
@@ -416,7 +416,7 @@
                 $('button.simpandata').attr('disabled','true');
                 $('#ModalWarning').modal('show');
                 var modalwarn = $('#ModalWarning')
-                modalwarn.find('.modal-title').text('Stok Habis.');
+                modalwarn.find('.modal-title').html('<i class="fa fa-exclamation-triangle"></i> Peringatan! Stok Barang Habis.');
                 modalwarn.find('.modal-body').html('Tidak dapat Melakukan Penjualan apabila Stok Habis.');
               } else {
                 $('button.simpandata').removeAttr('disabled');
