@@ -63,9 +63,70 @@
   </div><!-- Akhir Menu bar -->
   <br><br><br><br>
   <div class="container">
-    <h3>Input Data Penjualan</h3>
+    <div class="row">
+      <div class="col-sm-7">
+        <h3>Input Data Penjualan</h3>
     <label class="fa fa-user-edit"> </label> <label> Perhatikan Harga & Stok yang diinput. </label>
-    <form class="form">
+      </div>
+      <div class="col-sm">
+        
+        <div class="col">
+
+        <?php 
+        if (isset($_POST['simpanpenjualan'])) {
+          $kode_barang=$_POST['kode_barang'];
+          $harga_penjualan=$_POST['harga_penjualan'];
+          $jenis_penjualan=$_POST['jenis_penjualan'];
+          $jumlah=$_POST['jumlah'];
+          $tgl_penjualan=$_POST['tgl_penjualan'];
+          $id_akun=$_POST['id_akun'];
+          
+          
+          include_once 'koneksi.php';
+          $query="INSERT INTO data_penjualan (kode_barang, harga_penjualan, jenis_penjualan, jumlah, tgl_penjualan, id_akun) VALUES ('$kode_barang', '$harga_penjualan', '$jenis_penjualan', '$jumlah', '$tgl_penjualan', '$id_akun')";
+          if ($conn->query($query) ==TRUE) {
+            header('location:inputpenjualan.php?info=1');
+            mysqli_close();
+          } else {
+            header('location:inputpenjualan.php?info=2');
+            mysqli_close();
+          }
+        }
+
+        if (isset($_GET['info'])) {
+          if ($_GET['info']==1) {
+            ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>Data sudah Berhasil tersimpan!</strong> Kamu bisa melihatnya di <a href="lihatpenjualan.php.php">Data Penjualan</a>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <?php
+          } elseif ($_GET['info']==2) {
+            ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>Gagal tersimpan! Pastikan Kode Barang sudah benar. </strong> Silahkan <a href="inputpenjualan.php.php"><button class="btn btn-outline-primary">Coba Kembali</button></a> <br>
+              <?php
+              echo "Error: " . $query . "<br>" . $conn->error;
+              ?>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <?php
+          } else {
+
+          }
+        }
+        ?>
+
+      </div>
+
+      </div>
+    </div>
+    
+    <form class="form" method="post">
       <div class="row">
         <div class="form-group col-sm-4">
           <label for="kode_barang">Kode Barang  - (Enter)</label>
@@ -79,13 +140,17 @@
       </div>
 
       <div class="row">
-        <div class="form-group col-sm-4">
+        <div class="form-group col-sm">
           <label for="harga_modal">Harga Modal (M.1)</label>
           <input type="text" class="form-control form-control-plaintext" id="harga_modal" readonly  placeholder="-">
         </div>
-        <div class="form-group col-sm-4">
+        <div class="form-group col-sm">
           <label for="harga_m2">Harga Min. Jual Offline (M.2)</label>
           <input type="text" class="form-control form-control-plaintext" id="harga_m2" readonly  placeholder="-">
+        </div>
+        <div class="form-group col-sm-2">
+          <label for="stok">Jumlah Stok.</label>
+          <input type="text" class="form-control bg-primary text-light" id="stok" readonly  placeholder="-">
         </div>
         <div class="form-group col-sm">
           <label for="komisi">Komisi @Unit</label>
@@ -95,12 +160,12 @@
 
       <div class="row">
         <div class="form-group col-sm-4">
-          <label for="harga_jual">Harga Penjualan</label>
+          <label for="harga_penjualan">Harga Penjualan</label>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Rp. </span>
             </div>
-            <input id="harga_jual" type="number" class="form-control" aria-label="Harga Satuan" name="harga_jual" required="">
+            <input id="harga_penjualan" type="number" class="form-control" aria-label="Harga Satuan" name="harga_penjualan" required="">
             <div class="input-group-append">
               <span class="input-group-text">.-</span>
             </div>
@@ -109,7 +174,7 @@
 
         <div class="form-group col-sm-3">
           <label for="jenis_penjualan">Jenis Penjualan</label>
-          <select id="jenis_penjualan" class="form-control">
+          <select id="jenis_penjualan" class="form-control" name="jenis_penjualan">
             <option value="Offline">Offline (Langsung)</option>
             <option value="Online">Online (eCommerce)</option>
           </select>
@@ -117,23 +182,23 @@
 
         <div class="form-group col-sm-2">
           <label for="jumlah">Jumlah</label>
-          <input class="form-control form-control" type="number" required>
+          <input class="form-control form-control" type="number" required name="jumlah">
           
         </div>
 
         <div class="form-group col-sm">
           <label for="jumlah">Tanggal</label>
-          <input class="form-control form-control" type="date" required>
+          <input class="form-control form-control" type="date" required name="tgl_penjualan" value="<?php echo date("Y-m-d"); ?>">
 
         </div>
 
       </div>
       <!-- Session ID TOKO -->
-      <input type="hidden" name="id_toko" value="$_SESSION['id_toko']">
+      <input type="hidden" name="id_akun" value="1002">
 
       <div class="row">
         <div class="col-sm-2">
-          <button class="btn btn-primary" type="submit"><span class="fa fa-shopping-cart"></span> Jual Barang</button>
+          <button class="btn btn-primary" type="submit" name="simpanpenjualan"><span class="fa fa-shopping-cart"></span> Jual Barang</button>
         </div>
         <div class="col-sm-3">
           <button class="btn btn-warning text-dark"><span class="fa fa-thumbtack"></span> Book/Hold Barang</button>
@@ -145,9 +210,31 @@
     </form>
 
 
-  </div>    
+  </div>   <!--  Container -->
 
+<!-- Modal Dialog -->
+
+
+<!-- Modal -->
+<div class="modal fade bg-warning" id="ModalWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger" id="exampleModalLongTitle">Peringatan !</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="button" class="btn btn-danger" data-dismiss="modal">&times; Tutup</button>
+      </div>
+    </div>
+  </div>
 </div>
+
 
 <br><br><br>
 
@@ -157,6 +244,7 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
 
+<!-- // Ambil kode Barang dari URL -->
 <?php 
 if (isset($_GET['kode_barang'])) {
   ?>
@@ -177,6 +265,15 @@ if (isset($_GET['kode_barang'])) {
         $('input#nama_barang').val(data.nama_barang+' -> '+data.deskripsi);
         $('input#harga_modal').val(data.harga_modal);
         $('input#harga_m2').val(data.harga_m2);
+        $('input#stok').val(data.stok);
+        if (data.stok<1) {
+          $('#ModalWarning').modal('show');
+          var modalwarn = $('#ModalWarning')
+          modalwarn.find('.modal-title').text('Stok Habis.');
+          modalwarn.find('.modal-body').html('Tidak dapat Melakukan Penjualan apabila Stok Habis.');
+          
+
+        }
         $('input#komisi').val(data.komisi);
          $('input#harga_jual').focus();
 
@@ -197,6 +294,7 @@ if (isset($_GET['kode_barang'])) {
         $('input#harga_modal').val('');
         $('input#harga_m2').val('');
         $('input#komisi').val('');
+        $('input#stok').val('');
 
       $("#kode_barang").autocomplete({
         source: 'autocomplete_barang.php',
@@ -227,6 +325,7 @@ if (isset($_GET['kode_barang'])) {
                 $('input#nama_barang').val(data.nama_barang+' -> '+data.deskripsi);
                 $('input#harga_modal').val(data.harga_modal);
                 $('input#harga_m2').val(data.harga_m2);
+                $('input#stok').val(data.stok);
                 $('input#komisi').val(data.komisi);
                 $('input#harga_jual').focus();
 
@@ -260,6 +359,7 @@ if (isset($_GET['kode_barang'])) {
                 $('input#nama_barang').val(data.nama_barang+' -> '+data.deskripsi);
                 $('input#harga_modal').val(data.harga_modal);
                 $('input#harga_m2').val(data.harga_m2);
+                $('input#stok').val(data.stok);
                 $('input#komisi').val(data.komisi);
                 $('input#harga_jual').focus();
               }

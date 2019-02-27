@@ -64,7 +64,7 @@
         <a href="lihatpenjualan.php"><button class="btn btn-info"><span class="fa fa-sync-alt"></span> Refresh Data (F5)</button></a>
       </div>
       <div class="col-3">
-        <a href="inputpenjualan.php"><button class="btn btn-primary"><span class="fa fa-plus-circle"></span> Tambah Barang Baru</button></a>
+        <a href="inputpenjualan.php"><button class="btn btn-primary"><span class="fa fa-plus-circle"></span> Tambah Penjualan Baru</button></a>
       </div>
       <div class="col-12">
         <?php
