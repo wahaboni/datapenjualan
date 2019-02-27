@@ -217,7 +217,7 @@
         </div> <!-- Modal Body -->
         <div class="modal-footer">
           <button type="button" class="btn btn-md btn-danger float-left hapusbarang"><i class="fa fa-trash-alt"></i> Hapus Barang</button>
-          <button type="submit" name="tombol" class="btn btn-lg btn-primary" value="Ubah"><i class="fa fa-save"> </i> Simpan</button>         
+          <button type="submit" name="tombol" class="btn btn-lg btn-warning" value="Ubah"><i class="fa fa-save"> </i> Simpan</button>         
         </form>
       </div>
     </div>
