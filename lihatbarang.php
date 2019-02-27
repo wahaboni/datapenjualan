@@ -1,5 +1,6 @@
 <html>
 <head>
+  <link rel="icon" href="favicon.ico"/>
   <title>Lihat Data Semua Barang</title>
 
   <!-- Custom fonts for this template -->

@@ -1,6 +1,7 @@
 <html>
 <head>
   <title>Lihat Semua Penjualan</title>
+  <link rel="icon" href="favicon.ico"/>
   <!-- Custom fonts for this template -->
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">

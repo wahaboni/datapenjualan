@@ -16,7 +16,7 @@
 
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <!-- Material Design Bootstrap -->
-
+<link rel="icon" href="favicon.ico"/>
     <title>Program Data Penjualan</title>
   </head>
   <body>
