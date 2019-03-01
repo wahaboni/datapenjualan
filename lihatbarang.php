@@ -9,8 +9,6 @@
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   
-  Custom styles for this page
-  
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -68,22 +66,32 @@
         <a href="inputbarang.php"><button class="btn btn-success"><span class="fa fa-plus-circle"></span> Tambah Barang Baru</button></a>
       </div>
       <div class="col-12">
-      <?php
-      if (isset($_GET['alert'])) {
-        if ($_GET['alert']==1) {
-          ?>
-          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>Data berhasil diubah!</strong>.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <?php
+        <?php
+        if (isset($_GET['alert'])) {
+          if ($_GET['alert']==1) {
+            ?>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>Data berhasil diubah!</strong>.
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <?php
+          } elseif ($_GET['alert']==0) {
+            ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>Data Gagal dirubah! Mohon periksa kembali data yang rubah & coba kembali.</strong>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <?php
+          
+          }
         }
-      }
 
 
-      ?>
+        ?>
       </div>
     </div>
     <div class="table-responsive">
@@ -248,9 +256,9 @@
 
 <script text="text/javascript">
   $(document).ready(function () {
-    
+
     var table = $('#dataTable').DataTable();
- 
+
     $('div.dataTables_filter input', table.table().container()).focus();
 
     $(document).on('click','.ubahdata', function () {
@@ -292,14 +300,14 @@
 
   });
 
-function hapus() {
-  var r = confirm("Apakah yakin Mau Menghapus Data Barang! Setelah dihapus, data tidak dapat dipulihkan.");
-  if (r == true) {
-    return true;
-  } else {
-    return false;
+  function hapus() {
+    var r = confirm("Apakah yakin Mau Menghapus Data Barang! Setelah dihapus, data tidak dapat dipulihkan.");
+    if (r == true) {
+      return true;
+    } else {
+      return false;
+    }
   }
-}
 
 
 </script>
