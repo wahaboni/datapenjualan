@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version 5.5.5-10.1.37-MariaDB)
-# Date: 2019-02-28 10:22:09
+# Date: 2019-03-02 10:15:14
 # Generator: MySQL-Front 6.1  (Build 1.26)
 
 
@@ -11,16 +11,17 @@ DROP TABLE IF EXISTS `data_akun`;
 CREATE TABLE `data_akun` (
   `id_akun` int(11) NOT NULL AUTO_INCREMENT,
   `nama_akun` varchar(255) DEFAULT NULL,
+  `ket_akun` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `hak_akses` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_akun`)
-) ENGINE=InnoDB AUTO_INCREMENT=1003 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1004 DEFAULT CHARSET=latin1;
 
 #
 # Data for table "data_akun"
 #
 
-INSERT INTO `data_akun` VALUES (1001,'Administrator','admin789','1'),(1002,'Gudang','12345','2');
+INSERT INTO `data_akun` VALUES (1001,'administrator','Administrator','admin789','1'),(1002,'gudang','Gudang','12345','2'),(1003,'itstore','IT Store - Karawaci','112233','3');
 
 #
 # Structure for table "data_barang"
