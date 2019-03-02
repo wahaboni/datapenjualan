@@ -1,5 +1,8 @@
-
-
+<?php 
+if (isset($_COOKIE['username'])) {
+	header('location:index.php');
+}
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,6 +55,7 @@
 			$hasil=$login->num_rows;
 			if ($hasil>0) {
 				echo "Login Berhasil & akan dialihkan ke Beranda.";
+				setcookie("username",$inputID,time()+86400);
 				sleep(3);
 				header('location:index.php');
 			} else {
