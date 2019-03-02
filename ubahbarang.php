@@ -1,4 +1,9 @@
 <?php 
+if (!isset($_COOKIE['username'])) {
+    header('location:login.php');
+}
+?>
+<?php 
 
 if (isset($_POST['kode_barang']) && $_POST['tombol']=="Ubah") {
 	$kode_barang=$_POST['kode_barang'];

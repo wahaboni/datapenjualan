@@ -1,4 +1,9 @@
 <?php 
+if (!isset($_COOKIE['username'])) {
+    header('location:login.php');
+}
+?>
+<?php 
 
 if (isset($_GET['kode_penjualan']) && $_GET['tombol']=="Ubah") {
 	$kode_penjualan=$_GET['kode_penjualan'];
