@@ -1,3 +1,8 @@
+<?php 
+if (!isset($_COOKIE['username'])) {
+    header('location:login.php');
+}
+?>
 <html>
 <head>
   <link rel="icon" href="favicon.ico"/>

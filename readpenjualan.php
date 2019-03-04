@@ -1,4 +1,9 @@
 <?php 
+if (!isset($_COOKIE['username'])) {
+    header('location:login.php');
+}
+?>
+<?php 
 if (isset($_POST['kode_penjualan'])) {
 	include_once 'koneksi.php';
 	// Tangkap data dari GET URL
