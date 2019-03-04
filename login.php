@@ -2,7 +2,7 @@
 if (isset($_COOKIE['username'])) {
 	header('location:index.php');
 }
- ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,6 +14,7 @@ if (isset($_COOKIE['username'])) {
 	<meta name="author" content="">
 	<link rel="icon" href="favicon.ico">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<title>Selamat Datang di Sistem Penjualan - Silahkan Login</title>
 
 	<!-- Bootstrap core CSS -->
@@ -37,7 +38,6 @@ if (isset($_COOKIE['username'])) {
 </head>
 
 <body>
-	<br><br>
 	<div class="container form-signin">
 
 		<h4 class="form-signin-heading text-center">Login Sistem Penjualan  <i class="fa fa-lock"></i></h4>
@@ -47,34 +47,46 @@ if (isset($_COOKIE['username'])) {
 		<?php 
 
 		if (isset($_POST['login'])) {
-			include 'koneksi.php';
-			$inputID=$_POST['inputID'];
-			$inputPassword=$_POST['inputPassword'];
 
-			$login=$conn->query("SELECT * FROM data_akun WHERE id_akun='$inputID' or nama_akun='$inputID' and password='$inputPassword'");
-			$hasil=$login->num_rows;
-			if ($hasil>0) {
-				echo "Login Berhasil & akan dialihkan ke Beranda.";
-				setcookie("username",$inputID,time()+86400);
-				sleep(3);
-				header('location:index.php');
-			} else {
-				?>
-				<div class="alert alert-danger">
-				  <strong>Gagal!</strong> ID Akun dan Password tidak Cocok.
-				</div>
-				<?php
+			$userIP = $_SERVER["REMOTE_ADDR"];
+			$recaptchaResponse = $_POST['g-recaptcha-response'];
+			$secretKey = "6LeDVJUUAAAAAKS4GzX5oc9pw7ZbS_1uihKyEwNe";
+			$request = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secretKey}&response={$recaptchaResponse}&remoteip={$userIP}");
+
+			if(!strstr($request, "true")){
+				echo "NOPE (Failed Verification)";
 			}
-			
+			else{
+				
+				include 'koneksi.php';
+				$inputID=$_POST['inputID'];
+				$inputPassword=$_POST['inputPassword'];
+
+				$login=$conn->query("SELECT * FROM data_akun WHERE id_akun='$inputID' or nama_akun='$inputID' and password='$inputPassword'");
+				$hasil=$login->num_rows;
+				if ($hasil>0) {
+					echo "Login Berhasil & akan dialihkan ke Beranda.";
+					setcookie("username",$inputID,time()+86400);
+					sleep(3);
+					header('location:index.php');
+				} else {
+					?>
+					<div class="alert alert-danger">
+						<strong>Gagal!</strong> Akun atau Password tidak Cocok.
+					</div>
+					<?php
+				}
+				
+			}
 		}
 		?>
-		<br>
 		<form method="post">
 			<label for="inputID" class="sr-only">ID Akun</label>
-				<input type="text" name="inputID" id="inputID" class="form-control" placeholder="Masukan ID Toko / Nama Akun" required autofocus>
-			
+			<input type="text" name="inputID" id="inputID" class="form-control" placeholder="Masukan ID Toko / Nama Akun" required autofocus>
+			<br>
 			<label for="inputPassword" class="sr-only">Password</label>
-			<input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Masukan Password" required>
+			<input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Masukan Password" required /><br>
+			<div class="g-recaptcha" data-sitekey="6LeDVJUUAAAAAHtBMi1IxPu_ZvAM6Prh9hBd2sc-"></div>
 			<div class="">
 				<label class="text-light">
 					Lupa Password ?
