@@ -3,6 +3,7 @@ if (!isset($_COOKIE['username'])) {
     header('location:login.php');
 }
 ?>
+
 <!doctype html>
 <html lang="id">
 <head>
@@ -296,7 +297,8 @@ if (!isset($_COOKIE['username'])) {
       }
 
       $('input#komisi').val(data.komisi);
-      $('input#harga_jual').focus();
+      $('input#harga_penjualan').focus();
+      $('input#harga_penjualan').attr('min',data.harga_modal);
 
 
     }
@@ -372,7 +374,8 @@ if (!isset($_COOKIE['username'])) {
               }
 
               $('input#komisi').val(data.komisi);
-              $('input#harga_jual').focus();
+              $('input#harga_penjualan').focus();
+              $('input#harga_penjualan').attr('min',data.harga_modal);
 
 
             },
@@ -406,6 +409,7 @@ if (!isset($_COOKIE['username'])) {
                 $('input#harga_m2').val(data.harga_m2).toLocaleString();
                 $('input#stok').val(data.stok);
                 $('input#jumlah').attr('max',data.stok);
+                
 
                 if (data.stok < 10) {
                   $('input#stok').attr('class','form-control bg-warning text-light');
@@ -429,7 +433,9 @@ if (!isset($_COOKIE['username'])) {
               }
 
               $('input#komisi').val(data.komisi);
-              $('input#harga_jual').focus();
+              $('input#harga_penjualan').focus();
+              $('input#harga_penjualan').attr('min',data.harga_modal);
+              
             }
 
               }); // Punya Ajax
