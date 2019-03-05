@@ -1,5 +1,6 @@
 <?php 
-if (isset($_COOKIE['username'])) {
+session_start();
+if (isset($_SESSION['userLogin'])) {
 	header('location:index.php');
 }
 ?>
@@ -20,15 +21,9 @@ if (isset($_COOKIE['username'])) {
 	<!-- Bootstrap core CSS -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
 	<!-- Custom styles for this template -->
 	<link href="signin.css" rel="stylesheet">
 
-	<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-	<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-	<script src="js/ie-emulation-modes-warning.js"></script>
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -54,20 +49,26 @@ if (isset($_COOKIE['username'])) {
 			$request = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secretKey}&response={$recaptchaResponse}&remoteip={$userIP}");
 
 			if(!strstr($request, "true")){
-				echo "NOPE (Failed Verification)";
+				?>
+				<div class="alert alert-danger">
+						<strong>Robot tidak boleh Masuk!</strong> Silahkan Centang terlebih dahulu apabila anda bukan Robot.
+					</div>
+				<?php
 			}
 			else{
 				
 				include 'koneksi.php';
-				$inputID=$_POST['inputID'];
-				$inputPassword=$_POST['inputPassword'];
+				
+				$inputID=htmlspecialchars($_POST['inputID']);
+				$inputPassword=htmlspecialchars($_POST['inputPassword']);
 
 				$login=$conn->query("SELECT * FROM data_akun WHERE id_akun='$inputID' or nama_akun='$inputID' and password='$inputPassword'");
 				$hasil=$login->num_rows;
 				if ($hasil>0) {
-					echo "Login Berhasil & akan dialihkan ke Beranda.";
-					setcookie("username",$inputID,time()+86400);
-					sleep(3);
+					echo "Login Berhasil & akan segera dialihkan ke Beranda.";
+					session_start();
+					$_SESSION['userLogin'] = $inputID;
+					sleep(2);
 					header('location:index.php');
 				} else {
 					?>
@@ -97,8 +98,5 @@ if (isset($_COOKIE['username'])) {
 
 	</div> <!-- /container -->
 
-
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>

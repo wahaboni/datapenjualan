@@ -47,7 +47,7 @@
     <span class="navbar-text">
       Masuk sebagai <b> 
       <?php 
-      echo $_COOKIE['username'];
+      echo $_SESSION['userLogin'];
        ?></b>,  
         <a href="#" data-toggle="modal" data-target="#konfirmasiLogout">
           <label class="fa fa-power-off"> </label> 

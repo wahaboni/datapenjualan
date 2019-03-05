@@ -1,9 +1,9 @@
 <?php 
-if (!isset($_COOKIE['username'])) {
+session_start();
+if (!isset($_SESSION['userLogin'])) {
     header('location:login.php');
 }
 ?>
-
 <!doctype html>
 <html lang="id">
 <head>

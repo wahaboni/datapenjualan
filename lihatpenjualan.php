@@ -1,9 +1,9 @@
 <?php 
-if (!isset($_COOKIE['username'])) {
+session_start();
+if (!isset($_SESSION['userLogin'])) {
     header('location:login.php');
 }
 ?>
-
 <html>
 <head>
   <title>Lihat Semua Penjualan</title>
@@ -98,7 +98,7 @@ if (!isset($_COOKIE['username'])) {
         <tr>
           <th title="Kode Penjualan">#</th>
           <th>Nama Barang</th>
-          <th>Harga Penjualan</th>
+          <th>Harga Jual</th>
           <th>Jenis</th>
           <th>Jumlah</th>
           <th>Komisi</th>
@@ -112,7 +112,7 @@ if (!isset($_COOKIE['username'])) {
         <tr>
           <th title="Kode Penjualan">#</th>
           <th>Nama Barang</th>
-          <th>Harga Penjualan</th>
+          <th>Penjualan</th>
           <th>Jenis</th>
           <th>Jumlah</th>
           <th>Komisi</th>
@@ -127,10 +127,15 @@ if (!isset($_COOKIE['username'])) {
 
         <?php 
         include_once 'koneksi.php';
-        $datapenjualan=mysqli_query($conn, 'SELECT * FROM data_barang, data_penjualan, data_akun WHERE data_penjualan.kode_barang = data_barang.kode_barang and data_penjualan.id_akun = data_akun.id_akun');
+        $datapenjualan=mysqli_query($conn, 'SELECT * FROM data_barang, data_penjualan, data_akun WHERE data_penjualan.kode_barang = data_barang.kode_barang and data_penjualan.nama_akun = data_akun.nama_akun');
         while ($data=mysqli_fetch_array($datapenjualan)) {
+          if ($data['kode_status']==1) {
+            echo "<tr class=bg-warning>";
+          } else {
+             echo "<tr>";
+          }
           ?>
-          <tr>
+         
             <td><?php echo $data['kode_penjualan']; ?></td>
             <td><?php echo $data['nama_barang']; ?></td>
             <td><?php echo number_format($data['harga_penjualan'],0,",","."); ?></td>
@@ -139,7 +144,7 @@ if (!isset($_COOKIE['username'])) {
             <td><?php echo number_format($data['komisi']*$data['jumlah'],0,",","."); ?></td>
             <td><?php echo number_format(($data['harga_penjualan']-$data['harga_modal'])*$data['jumlah'],0,",","."); ?></td>
             <td><?php echo $data['tgl_penjualan']; ?></td>
-            <td><?php echo $data['nama_akun']; ?></td>
+            <td><?php echo $data['ket_akun']; ?></td>
             <td>
 
               <button class="btn btn-secondary btn-sm lihatdata" title="Lihat Penjualan" id="<?php echo $data['kode_penjualan']; ?>"><span class="fa fa-eye"></span></button>

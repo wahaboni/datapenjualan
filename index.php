@@ -1,5 +1,6 @@
 <?php 
-if (!isset($_COOKIE['username'])) {
+session_start();
+if (!isset($_SESSION['userLogin'])) {
     header('location:login.php');
 }
 ?>
@@ -184,7 +185,7 @@ if (!isset($_COOKIE['username'])) {
         </button>
       </div>
       <div class="modal-body">
-       Anda akan keluar dari Akun <b><?php echo $_COOKIE['username']; ?></b>, Apakah anda yakin?
+       Anda akan keluar dari Akun <b><?php echo $_SESSION['userLogin']; ?></b>, Apakah anda yakin?
       </div>
       <div class="modal-footer">
         <a href="logout.php"><button type="button" class="btn btn-warning"><i class="fa fa-power-off"> </i> Keluar Akun</button></a>

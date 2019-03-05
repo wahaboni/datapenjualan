@@ -1,6 +1,7 @@
 <?php 
-if (!isset($_COOKIE['username'])) {
-    header('location:login.php');
+session_start();
+if (!isset($_SESSION['userLogin'])) {
+  header('location:login.php');
 }
 ?>
 
@@ -81,20 +82,35 @@ if (!isset($_COOKIE['username'])) {
 
           <?php 
           if (isset($_POST['simpanpenjualan'])) {
+            $simpanpenjualan=$_POST['simpanpenjualan'];
             $kode_barang=$_POST['kode_barang'];
             $harga_penjualan=$_POST['harga_penjualan'];
             $jenis_penjualan=$_POST['jenis_penjualan'];
             $jumlah=$_POST['jumlah'];
             $tgl_penjualan=$_POST['tgl_penjualan'];
-            $id_akun=$_POST['id_akun'];
-
+            $nama_akun=$_SESSION['userLogin'];
+            if ($simpanpenjualan=='bookingbarang'){
+              $kode_status=1;
+            } elseif ($simpanpenjualan=='jualbarang') {
+              $kode_status=2;
+            }
 
             include_once 'koneksi.php';
-            $query="INSERT INTO data_penjualan (kode_barang, harga_penjualan, jenis_penjualan, jumlah, tgl_penjualan, id_akun) VALUES ('$kode_barang', '$harga_penjualan', '$jenis_penjualan', '$jumlah', '$tgl_penjualan', '$id_akun')";
+            $query="INSERT INTO data_penjualan (kode_barang, harga_penjualan, jenis_penjualan, jumlah, kode_status, tgl_penjualan, nama_akun) VALUES ('$kode_barang', '$harga_penjualan', '$jenis_penjualan', '$jumlah', '$kode_status', '$tgl_penjualan', '$nama_akun')";
             if ($conn->query($query) ==TRUE) {
+
+              $cekstok="SELECT stok FROM data_barang where kode_barang='$kode_barang'";
+              $databarang=mysqli_query($conn, $cekstok);
+              $data=mysqli_fetch_row($databarang);
+              $updatestok=$data['0'];
+              $updatestok-=$jumlah;
+
+             $rumus="UPDATE data_barang SET stok='$updatestok' WHERE kode_barang='$kode_barang'";
+              mysqli_query($conn, $rumus);
               header('location:inputpenjualan.php?info=1');
               mysqli_close();
-            } else {
+            }
+            else {
               header('location:inputpenjualan.php?info=2');
               mysqli_close();
             }
@@ -114,9 +130,6 @@ if (!isset($_COOKIE['username'])) {
               ?>
               <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>Gagal tersimpan! Pastikan Kode Barang sudah benar. </strong> Silahkan <a href="inputpenjualan.php"><button class="btn btn-outline-primary">Coba Kembali</button></a> <br>
-                <?php
-                echo "Error: " . $query . "<br>" . $conn->error;
-                ?>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -200,15 +213,13 @@ if (!isset($_COOKIE['username'])) {
         </div>
 
       </div>
-      <!-- Session ID TOKO -->
-      <input type="hidden" name="id_akun" value="1002">
 
       <div class="row">
         <div class="col-sm-2">
-          <button class="btn btn-primary simpandata" type="submit" name="simpanpenjualan"><span class="fa fa-shopping-cart"></span> Jual Barang</button>
+          <button class="btn btn-primary simpanpenjualan" type="submit" name="simpanpenjualan" value="jualbarang"><span class="fa fa-shopping-cart"></span> Jual Barang</button>
         </div>
         <div class="col-sm-3">
-          <button class="btn btn-warning text-dark simpandata"><span class="fa fa-thumbtack"></span> Book/Hold Barang</button>
+          <button class="btn btn-warning text-dark simpanpenjualan" type="submit" name="simpanpenjualan" value="bookingbarang"><span class="fa fa-thumbtack"></span> Booking/Hold Barang</button>
         </div>
         <div class="col"><button type="reset" id="reset" class="btn btn-light"><span class="fa fa-trash"></span> Bersihkan</button></div>
         
@@ -287,13 +298,13 @@ if (!isset($_COOKIE['username'])) {
       }
 
       if (data.stok<1) {
-        $('button.simpandata').attr('disabled','true');
+        $('button.simpanpenjualan').attr('disabled','true');
         $('#ModalWarning').modal('show');
         var modalwarn = $('#ModalWarning')
         modalwarn.find('.modal-title').html('<i class="fa fa-exclamation-triangle"></i> Peringatan! Stok Barang Habis.');
         modalwarn.find('.modal-body').html('Tidak dapat Melakukan Penjualan apabila Stok Habis.');
       } else {
-        $('button.simpandata').removeAttr('disabled');
+        $('button.simpanpenjualan').removeAttr('disabled');
       }
 
       $('input#komisi').val(data.komisi);
@@ -311,7 +322,7 @@ if (!isset($_COOKIE['username'])) {
 <script>
 
   $(document).ready(function () {
-    $('button.simpandata').attr('disabled','true');
+    $('button.simpanpenjualan').attr('disabled','true');
 
     $('input#kode_barang').focus()
     $('#kode_barang').keypress(function() {
@@ -364,13 +375,13 @@ if (!isset($_COOKIE['username'])) {
               }
 
               if (data.stok<1) {
-                $('button.simpandata').attr('disabled','true');
+                $('button.simpanpenjualan').attr('disabled','true');
                 $('#ModalWarning').modal('show');
                 var modalwarn = $('#ModalWarning')
                 modalwarn.find('.modal-title').html('<i class="fa fa-exclamation-triangle"></i> Peringatan! Stok Barang Habis.');
                 modalwarn.find('.modal-body').html('Tidak dapat Melakukan Penjualan apabila Stok Habis.');
               } else {
-                $('button.simpandata').removeAttr('disabled');
+                $('button.simpanpenjualan').removeAttr('disabled');
               }
 
               $('input#komisi').val(data.komisi);
@@ -423,13 +434,13 @@ if (!isset($_COOKIE['username'])) {
 
 
               if (data.stok<1) {
-                $('button.simpandata').attr('disabled','true');
+                $('button.simpanpenjualan').attr('disabled','true');
                 $('#ModalWarning').modal('show');
                 var modalwarn = $('#ModalWarning')
                 modalwarn.find('.modal-title').html('<i class="fa fa-exclamation-triangle"></i> Peringatan! Stok Barang Habis.');
                 modalwarn.find('.modal-body').html('Tidak dapat Melakukan Penjualan apabila Stok Habis.');
               } else {
-                $('button.simpandata').removeAttr('disabled');
+                $('button.simpanpenjualan').removeAttr('disabled');
               }
 
               $('input#komisi').val(data.komisi);

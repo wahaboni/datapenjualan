@@ -1,8 +1,14 @@
 <?php 
-if (!isset($_COOKIE['username'])) {
+session_start();
+if (!isset($_SESSION['userLogin'])) {
     header('location:login.php');
 } else {
-	setcookie("username","", time()-3600);
+		// remove all session variables
+	session_unset(); 
+
+	// destroy the session 
+	session_destroy(); 
+	sleep(1);
 	header('location:login.php');
 }
 ?>
