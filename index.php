@@ -16,11 +16,12 @@ if (!isset($_SESSION['userLogin'])) {
     Font Awesome
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 -->
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-<!-- Bootstrap core CSS -->
 
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+
+
 <!-- Material Design Bootstrap -->
 <link rel="icon" href="favicon.ico"/>
 <title>Program Data Penjualan</title>
@@ -34,10 +35,25 @@ if (!isset($_SESSION['userLogin'])) {
         ?>
     </div>
     <br><br><br>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row border">
-            <div class="col-sm-9">
+            <div class="col">
                 <br>
+<!--                         Kartu Statistik Penjualan -->
+            <div class="card shadow mb">
+                <div class="card-header">
+                  <h6 class="m-0 font-weight-bold text-primary">Statistik Penjualan</h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="myAreaChart" class="col-sm-8"></canvas>
+                  </div>
+                  <hr>
+                  Styling for the area chart can be found in the <code>/js/demo/chart-area-demo.js</code> file.
+                </div>
+              </div>
+                <br>
+
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="dropdown">
@@ -99,22 +115,9 @@ if (!isset($_SESSION['userLogin'])) {
                         </tr>
                     </tbody>
                 </table>
-                <nav aria-label="...">
-                    <ul class="pagination">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                        <li class="page-item" aria-current="page">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+                
                 <br>
+
                 <table class="table table-striped">
                     <h4><label>Stok Barang paling sedikit</label></h4>
                     <thead>
@@ -160,16 +163,7 @@ if (!isset($_SESSION['userLogin'])) {
                     </table>
 
                 </div>
-                <div class="col-sm-3 border">
-                    <br>
-                    <div class="alert alert-info" role="alert"><label>Informasi</label></div>
-                    <div class="alert alert-success" role="alert">
-                        <h4 class="alert-heading">Kumpulkan Report</h4>
-                        <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
-                        <hr>
-                        <p class="mb-0"><button class="btn btn-primary">Kirim</button>.</p>
-                    </div>
-                </div>
+               
             </div>
         </div>
 
@@ -195,9 +189,12 @@ if (!isset($_SESSION['userLogin'])) {
   </div>
 </div>
 
-
-    <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js" type="text/javascript" charset="utf-8" async defer></script>
+    
+    <script src="js/demo/chart-area-demo.js" type="text/javascript" charset="utf-8" async defer></script>
+    
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->

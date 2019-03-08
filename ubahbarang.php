@@ -23,8 +23,6 @@ if (isset($_POST['kode_barang']) && $_POST['tombol']=="Ubah") {
 		header("location:lihatbarang.php?alert=0");
 	}
 
-
-
 } else {
 	
 }

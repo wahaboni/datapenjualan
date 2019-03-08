@@ -76,7 +76,7 @@ if (!isset($_SESSION['userLogin'])) {
         if (isset($_GET['alert'])) {
           if ($_GET['alert']==1) {
             ?>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
               <strong>Data berhasil diubah!</strong>.
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -86,7 +86,17 @@ if (!isset($_SESSION['userLogin'])) {
           } elseif ($_GET['alert']==0) {
             ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-              <strong>Data Gagal dirubah! Mohon periksa kembali data yang rubah & coba kembali.</strong>
+              <strong>Data Gagal dirubah! Mohon periksa kembali data yang rubah atau coba kembali.</strong>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <?php
+          
+          } elseif ($_GET['alert']==2) {
+            ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>Barang sudah berhasil dihapus!</strong>
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -231,7 +241,8 @@ if (!isset($_SESSION['userLogin'])) {
           </div>
         </div> <!-- Modal Body -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-md btn-danger float-left hapusbarang"><i class="fa fa-trash-alt"></i> Hapus Barang</button>
+          <a id="hapusbarang" onclick="return confirm('Apakah yakin Mau Menghapus Data Barang! Setelah dihapus, data tidak dapat dipulihkan.')"><button type="button" class="btn btn-md btn-danger float-left hapusbarang">
+            <i class="fa fa-trash-alt"></i> Hapus Barang</button></a>
           <button type="submit" name="tombol" class="btn btn-lg btn-warning" value="Ubah"><i class="fa fa-save"> </i> Simpan</button>         
         </form>
       </div>
@@ -290,6 +301,7 @@ if (!isset($_SESSION['userLogin'])) {
           modal.find('.modal-body input#harga_m2').val(data.harga_m2);
           modal.find('.modal-body input#komisi').val(data.komisi);
           modal.find('.modal-body input#kode_barang').val(data.kode_barang);
+          modal.find('a#hapusbarang').attr("href","hapusbarang.php?kode_barang="+data.kode_barang);
 
                   //menampilkan data ke dalam modal
                 }
@@ -306,14 +318,14 @@ if (!isset($_SESSION['userLogin'])) {
 
   });
 
-  function hapus() {
-    var r = confirm("Apakah yakin Mau Menghapus Data Barang! Setelah dihapus, data tidak dapat dipulihkan.");
+ /* function hapus() {
+    var r = confirm("");
     if (r == true) {
       return true;
     } else {
       return false;
     }
-  }
+  }*/
 
 
 </script>

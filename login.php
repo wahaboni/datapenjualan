@@ -87,16 +87,20 @@ if (isset($_SESSION['userLogin'])) {
 			<br>
 			<label for="inputPassword" class="sr-only">Password</label>
 			<input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Masukan Password" required /><br>
-			<div class="g-recaptcha" data-sitekey="6LeDVJUUAAAAAHtBMi1IxPu_ZvAM6Prh9hBd2sc-"></div>
+			<div class="g-recaptcha" data-sitekey="6LeDVJUUAAAAAHtBMi1IxPu_ZvAM6Prh9hBd2sc-" data-callback="enableBtn"></div>
 			<div class="">
 				<label class="text-light">
 					Lupa Password ?
 				</label>
 			</div>
-			<button class="btn btn-lg btn-primary btn-block" type="submit" name="login">Memulai <i class="fa fa-power-off"></i></button>
+			<button class="btn btn-lg btn-primary btn-block" type="submit" name="login" id="login" disabled>Memulai <i class="fa fa-power-off"></i></button>
 		</form>
 
 	</div> <!-- /container -->
-
+<script>
+	function enableBtn(){
+    document.getElementById("login").disabled = false;
+   }
+</script>
 </body>
 </html>

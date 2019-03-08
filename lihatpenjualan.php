@@ -93,7 +93,7 @@ if (!isset($_SESSION['userLogin'])) {
       </div>
     </div>
     <div class="table-responsive">
-     <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
       <thead>
         <tr>
           <th title="Kode Penjualan">#</th>
@@ -130,14 +130,14 @@ if (!isset($_SESSION['userLogin'])) {
         $datapenjualan=mysqli_query($conn, 'SELECT * FROM data_barang, data_penjualan, data_akun WHERE data_penjualan.kode_barang = data_barang.kode_barang and data_penjualan.nama_akun = data_akun.nama_akun');
         while ($data=mysqli_fetch_array($datapenjualan)) {
           if ($data['kode_status']==1) {
-            echo "<tr class=bg-warning>";
+            echo "<tr class=bg-warning id=booked>";
           } else {
              echo "<tr>";
           }
           ?>
          
             <td><?php echo $data['kode_penjualan']; ?></td>
-            <td><?php echo $data['nama_barang']; ?></td>
+            <td id="nama_barang"><?php echo $data['nama_barang']; ?></td>
             <td><?php echo number_format($data['harga_penjualan'],0,",","."); ?></td>
             <td><?php echo $data['jenis_penjualan']; ?></td>
             <td><?php echo $data['jumlah']; ?></td>
@@ -347,6 +347,10 @@ if (!isset($_SESSION['userLogin'])) {
 
 <script text="text/javascript">
   $(document).ready(function () {
+    $('table#dataTable tr#booked td').attr("title","Penjualan ini masih dalam Status Booking / Hold");
+    $('table#dataTable tr#booked td').attr("class","text-light");
+    $('table#dataTable tr#booked td#nama_barang').append(" <span class='fa fa-thumbtack'></span>");
+
 
     var table = $('#dataTable').DataTable();
 
