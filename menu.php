@@ -44,17 +44,27 @@
 
     </ul>
 
-    <span class="navbar-text">
-      Masuk sebagai <b> 
+<ul class="nav navbar-nav navbar-right">
+      <li class="nav-link text-success">
+         Masuk sebagai <b> 
       <?php 
-      echo $_SESSION['userLogin'];
-       ?></b>,  
-        <a href="#" data-toggle="modal" data-target="#konfirmasiLogout">
-          <label class="fa fa-power-off"> </label> 
-          Keluar
-        </a>
+      echo "<a href=profil.php>".$_SESSION['userLogin']."</a>";
+       ?></b>
+       
+       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="lihatpenjualan.php">Lihat Data Penjualan</a>
+          <a class="dropdown-item" href="lihatbarang.php">Lihat Data Barang</a>
+          <a class="dropdown-item" href="#">-</a>
+        </div>
 
-    </span>
+      </li>
+      <li class="nav-item">
+      <button class="btn btn-danger navbar-btn" data-toggle="modal" data-target="#konfirmasiLogout"><span class="fa fa-power-off"> </span> 
+          Keluar
+        </a></button>
+      </li>
+    </ul>
+
 
 
 

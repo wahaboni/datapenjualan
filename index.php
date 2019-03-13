@@ -281,10 +281,10 @@ Diagram Penjualan per Bulan.
       </button>
   </div>
   <div class="modal-body">
-   Anda akan keluar dari Akun <b><?php echo $_SESSION['userLogin']; ?></b>, Apakah anda yakin?
+   Anda akan keluar dari Akun <b><?php echo $_SESSION['userLogin']; ?></b>, Apakah anda yakin mau keluar?
 </div>
 <div class="modal-footer">
-    <a href="logout.php"><button type="button" class="btn btn-warning"><i class="fa fa-power-off"> </i> Keluar Akun</button></a>
+    <a href="logout.php"><button type="button" class="btn btn-danger"><i class="fa fa-power-off"> </i> Keluar Akun</button></a>
     <button type="button" class="btn btn-primary" data-dismiss="modal">Kembali</button>
 </div>
 </div>

@@ -23,8 +23,6 @@ if (!isset($_SESSION['userLogin'])) {
 
   <title>Input Data Penjualan</title>
 
-
-
 </head>
 <body>
 
@@ -83,11 +81,17 @@ if (!isset($_SESSION['userLogin'])) {
           <?php 
           if (isset($_POST['simpanpenjualan'])) {
             $simpanpenjualan=$_POST['simpanpenjualan'];
-            $kode_barang=$_POST['kode_barang'];
+            
+            $kode_barang=$_SESSION['ses.kode_barang'];
+            $nama_barang=$_SESSION['ses.nama_barang'];
+            $harga_modal=$_SESSION['ses.harga_modal'];
+            $komisi=$_SESSION['ses.komisi'];
+
             $harga_penjualan=$_POST['harga_penjualan'];
             $jenis_penjualan=$_POST['jenis_penjualan'];
             $jumlah=$_POST['jumlah'];
             $tgl_penjualan=$_POST['tgl_penjualan'];
+
             $nama_akun=$_SESSION['userLogin'];
             if ($simpanpenjualan=='bookingbarang'){
               $kode_status=1;
@@ -96,7 +100,7 @@ if (!isset($_SESSION['userLogin'])) {
             }
 
             include_once 'koneksi.php';
-            $query="INSERT INTO data_penjualan (kode_barang, harga_penjualan, jenis_penjualan, jumlah, kode_status, tgl_penjualan, nama_akun) VALUES ('$kode_barang', '$harga_penjualan', '$jenis_penjualan', '$jumlah', '$kode_status', '$tgl_penjualan', '$nama_akun')";
+            $query="INSERT INTO data_penjualan (kode_barang, nama_barang, harga_penjualan, harga_modal, komisi, jenis_penjualan, jumlah, kode_status, tgl_penjualan, nama_akun) VALUES ('$kode_barang', '$nama_barang', '$harga_penjualan', '$harga_modal', '$komisi', '$jenis_penjualan', '$jumlah', '$kode_status', '$tgl_penjualan', '$nama_akun')";
             if ($conn->query($query) ==TRUE) {
 
               $cekstok="SELECT stok FROM data_barang where kode_barang='$kode_barang'";
@@ -105,7 +109,7 @@ if (!isset($_SESSION['userLogin'])) {
               $updatestok=$data['0'];
               $updatestok-=$jumlah;
 
-             $rumus="UPDATE data_barang SET stok='$updatestok' WHERE kode_barang='$kode_barang'";
+              $rumus="UPDATE data_barang SET stok='$updatestok' WHERE kode_barang='$kode_barang'";
               mysqli_query($conn, $rumus);
               header('location:inputpenjualan.php?info=1');
               mysqli_close();
@@ -257,8 +261,10 @@ if (!isset($_SESSION['userLogin'])) {
   <br><br><br>
 
   <!-- Optional JavaScript -->
-  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="vendor/jquery/jquery-1.10.2.js"></script>
+
+
+  <script src="vendor/jquery/jquery-ui.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
 
@@ -325,7 +331,7 @@ if (!isset($_SESSION['userLogin'])) {
     $('button.simpanpenjualan').attr('disabled','true');
 
     $('input#kode_barang').focus()
-    $('#kode_barang').keypress(function() {
+    $('#kode_barang').keyup(function() {
       $('input#nama_barang').val('');
       $('input#harga_modal').val('');
       $('input#harga_m2').val('');
@@ -343,6 +349,8 @@ if (!isset($_SESSION['userLogin'])) {
       })
 
     });
+
+
     $('#kode_barang').keypress(function(event){
       var keycode = (event.keyCode ? event.keyCode : event.which);
       if(keycode == '13'){
@@ -376,6 +384,7 @@ if (!isset($_SESSION['userLogin'])) {
 
               if (data.stok<1) {
                 $('button.simpanpenjualan').attr('disabled','true');
+
                 $('#ModalWarning').modal('show');
                 var modalwarn = $('#ModalWarning')
                 modalwarn.find('.modal-title').html('<i class="fa fa-exclamation-triangle"></i> Peringatan! Stok Barang Habis.');
@@ -451,8 +460,81 @@ if (!isset($_SESSION['userLogin'])) {
 
               }); // Punya Ajax
           });
+           
 
-    $('button#reset').click(function() {
+    // Untuk outfocus Kode Barang
+    $("#kode_barang").focusout(function () {
+
+     var kode_barang = $('#kode_barang').val();
+            // Ambil data Barang otomatis
+            $.ajax({
+              method:"POST",
+              url:"readbarang.php",
+              data:{kode_barang:kode_barang},
+              dataType:"json",
+              
+              error:function (jqXHR, textStatus, errorThrown) {
+                alert('tidak ada data.')
+              },
+              success:function(data){
+                if (!$.trim(data)){   
+                  $('button.simpanpenjualan').attr('disabled','true');
+                }
+
+                $('input#kode_barang').val(data.kode_barang);
+                $('input#nama_barang').val(data.nama_barang+' -> '+data.deskripsi);
+                $('input#harga_modal').val(data.harga_modal);
+                $('input#harga_m2').val(data.harga_m2).toLocaleString();
+                $('input#stok').val(data.stok);
+                $('input#jumlah').attr('max',data.stok);
+                
+                if (data.stok < 10) {
+                  $('input#stok').attr('class','form-control bg-warning text-light');
+                }
+                if(data.stok < 5) {
+                 $('input#stok').attr('class','form-control bg-danger text-light'); 
+               }
+               if (data.stok>9){
+                $('input#stok').attr('class','form-control bg-primary text-light');
+              }
+
+
+              if (data.stok<1) {
+                $('button.simpanpenjualan').attr('disabled','true');
+                $('#ModalWarning').modal('show');
+                var modalwarn = $('#ModalWarning')
+                modalwarn.find('.modal-title').html('<i class="fa fa-exclamation-triangle"></i> Peringatan! Stok Barang Habis.');
+                modalwarn.find('.modal-body').html('Tidak dapat Melakukan Penjualan apabila Stok Habis.');
+              } else {
+                $('button.simpanpenjualan').removeAttr('disabled');
+                
+                $.post("sess_penjualan.php",
+                {
+                  kode_barang:data.kode_barang,
+                  nama_barang:data.nama_barang,
+                  harga_modal:data.harga_modal,
+                  komisi:data.komisi
+                  
+                },
+                function (response,status) {
+                console.log(response+status)
+                }
+                )
+              }
+
+              $('input#komisi').val(data.komisi);
+              $('input#harga_penjualan').focus();
+              $('input#harga_penjualan').attr('min',data.harga_modal);
+
+              
+            }
+            
+
+              }); // Punya Ajax
+          });
+     // Akhir dari outfocus
+
+     $('button#reset').click(function() {
       $('input#kode_barang').focus()
 
     })

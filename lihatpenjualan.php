@@ -127,7 +127,7 @@ if (!isset($_SESSION['userLogin'])) {
 
         <?php 
         include_once 'koneksi.php';
-        $datapenjualan=mysqli_query($conn, 'SELECT * FROM data_barang, data_penjualan, data_akun WHERE data_penjualan.kode_barang = data_barang.kode_barang and data_penjualan.nama_akun = data_akun.nama_akun');
+        $datapenjualan=mysqli_query($conn, 'SELECT * FROM data_penjualan, data_akun WHERE data_penjualan.nama_akun = data_akun.nama_akun');
         while ($data=mysqli_fetch_array($datapenjualan)) {
           if ($data['kode_status']==1) {
             echo "<tr class=bg-warning id=booked>";
