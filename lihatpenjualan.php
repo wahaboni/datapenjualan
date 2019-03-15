@@ -141,7 +141,7 @@ if (!isset($_SESSION['userLogin'])) {
             <td><?php echo number_format($data['harga_penjualan'],0,",","."); ?></td>
             <td><?php echo $data['jenis_penjualan']; ?></td>
             <td><?php echo $data['jumlah']; ?></td>
-            <td><?php echo number_format($data['komisi']*$data['jumlah'],0,",","."); ?></td>
+            <td><?php echo number_format($data['komisi'],0,",","."); ?></td>
             <td><?php echo number_format(($data['harga_penjualan']-$data['harga_modal'])*$data['jumlah'],0,",","."); ?></td>
             <td><?php echo $data['tgl_penjualan']; ?></td>
             <td><?php echo $data['ket_akun']; ?></td>
@@ -246,12 +246,13 @@ if (!isset($_SESSION['userLogin'])) {
 </div> <!-- Akhir Modal Example -->
 
 
+
 <!-- Awal Modal  lihatdata-->
   <div class="modal fade" id="Modallihatdata" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Lihat Data Penjualan</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Rincian Penjualan</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -260,66 +261,73 @@ if (!isset($_SESSION['userLogin'])) {
         <div class="modal-body">
           <div class="container">
             <div class="row">
-             <form class="form" method="get" action="ubahpenjualan.php">
-              <div class="row">
-                <input type="hidden" name="kode_penjualan" id="kode_penjualan">
-                <input type="hidden" name="harga_modal" id="harga_modal">
+              <table class="table">
+            
 
-                <div class="form-group col-sm">
-                  <label for="harga_penjualan">Harga Penjualan Satuan</label>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Rp. </span>
-                    </div>
-                    <input id="harga_penjualan" type="number" class="form-control" aria-label="Harga Penjualan Satuan" name="harga_penjualan" required="" placeholder="">
-                    <div class="input-group-append">
-                      <span class="input-group-text">.-</span>
-                    </div>
-                  </div>
-                </div>
+                <tr>
+                  <td><label for="">Nama Barang</label></td>
+                  <td>:</td>
+                  <td>
+                    <b>#<label id="kode_barang"></label></b>- <label id="nama_barang"></label>
+                  <a id="kode_barang" title="Jual Barang ini."><button class="btn btn-primary btn-sm"><span class="fa fa-shopping-cart"></span></button></a>
+                  </td>
+                </tr>
+
+
+                <tr>
+                  <td><label for="">Harga Modal</label></td>
+                  <td>:</td>
+                  <td><label id="harga_modal"></label></td>
+                </tr>
+
+                <tr>
+                  <td><label for="">Harga Penjualan</label></td>
+                  <td>:</td>
+                  <td><label id="harga_penjualan"></label></td>
+                </tr>
+
+                 <tr>
+                  <td><label for="">Jumlah</label></td>
+                  <td>:</td>
+                  <td><label id="jumlah"></label></td>
+                </tr>
+
+                <tr>
+                  <td><label for="">Margin</label></td>
+                  <td>:</td>
+                  <td><label id="margin"></label></td>
+                </tr>
+
+                <tr>
+                  <td><label for="">Komisi</label></td>
+                  <td>:</td>
+                  <td><label id="komisi"></label></td>
+                </tr>
+
+                <tr>
+                  <td><label for="">Jenis Penjualan</label></td>
+                  <td>:</td>
+                  <td><label id="jenis_penjualan"></label></td>
+                </tr>
+
                 
-              </div>
-              <div class="row">
 
-                <div class="form-group col-sm-8">
-                 <label for="jenis_penjualan">Jenis Penjualan</label>
-                 <select id="jenis_penjualan" class="form-control" name="jenis_penjualan">
-                  <option value="Offline">Offline (Langsung)</option>
-                  <option value="Online">Online (eCommerce)</option>
-                </select>
-              </div>
+                 <tr>
+                  <td><label for="">Tanggal Penjualan</label></td>
+                  <td>:</td>
+                  <td><label id="tgl_penjualan"></label></td>
+                </tr>
 
-              <div class="form-group col-sm">
-                <label for="jumlah">Jumlah</label>
-                <input class="form-control form-control" type="number" required id="jumlah" name="jumlah">
 
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-sm-6">
-                <label for="komisi" id="lblkomisi">Komisi</label>
-                <input type="number" readonly class="form-control form-control-plaintext" id="komisi" name="komisi" placeholder="-">
-              </div>
-              <div class="form-group col-sm">
-                <label for="margin" id="lblmargin">Margin</label>
-                <input type="number" class="form-control" readonly id="margin" placeholder="-">
-              </div>
 
-            </div>
-            <div class="row">
-              <div class="form-group col">
-                <label for="total" id="total"><b>Total Pembayaran Penjualan :</b></label>
-                <input type="number" class="form-control bg-primary text-light float-sm-right" readonly id="total" placeholder="-">
-              </div>
+              </table>
             </div>
 
-          </form>
-        </div>
+        
       </div>
     </div> <!-- Modal Body -->
     <div class="modal-footer">
-      <button type="button" class="btn btn-md btn-warning float-left hapusbarang"><i class="fa fa-trash-alt"></i> Hapus Penjualan</button>
-      <button type="submit" name="tombol" class="btn btn-lg btn-primary" value="Ubah"><i class="fa fa-save"> </i> Simpan</button>         
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Kembali</button>
 
     </div>
   </div>
@@ -329,6 +337,7 @@ if (!isset($_SESSION['userLogin'])) {
 
 
 </div> <!-- Container Fuild -->
+
 
 
 
@@ -361,7 +370,41 @@ if (!isset($_SESSION['userLogin'])) {
       var kode_penjualan=$(this).attr("id");
       $('#Modallihatdata').modal('show');
 
-    })
+
+      var modal = $('#Modallihatdata')
+      modal.find('.modal-title').text('Rincian Penjualan');
+      modal.find('.modal-body input#kode_penjualan').val(kode_penjualan);
+
+      $.ajax({
+        method:"POST",
+        url:"readpenjualan.php",
+        data:{kode_penjualan:kode_penjualan},
+        dataType:"json",
+        success:function(data){
+
+          modal.find('.modal-title').text('Rincian Penjualan dengan Kode Penjualan: ' + kode_penjualan);
+
+          modal.find('.modal-body label#kode_barang').html(data.kode_barang);
+          modal.find('.modal-body a#kode_barang').attr('href','inputpenjualan.php?kode_barang='+data.kode_barang);
+          modal.find('.modal-body label#nama_barang').html(data.nama_barang);
+          modal.find('.modal-body label#harga_modal').html(data.harga_modal);
+          modal.find('.modal-body label#harga_penjualan').html(data.harga_penjualan);
+
+          var margin = (data.harga_penjualan-data.harga_modal)*data.jumlah;
+
+          modal.find('.modal-body label#margin').html(margin);
+
+          modal.find('.modal-body label#komisi').html(data.komisi);
+          modal.find('.modal-body label#jenis_penjualan').html(data.jenis_penjualan);
+          modal.find('.modal-body label#jumlah').html(data.jumlah);
+          modal.find('.modal-body label#tgl_penjualan').html(data.tgl_penjualan);
+
+         
+                  //menampilkan data ke dalam modal
+                }
+        }); // Punya Ajax
+
+    });
 
 
     $(document).on('click','.ubahdata', function () {
