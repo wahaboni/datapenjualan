@@ -133,7 +133,7 @@ if (!isset($_SESSION['userLogin'])) {
             } elseif ($_GET['info']==2) {
               ?>
               <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Gagal tersimpan! Pastikan Kode Barang sudah benar. </strong> Silahkan <a href="inputpenjualan.php"><button class="btn btn-outline-primary">Coba Kembali</button></a> <br>
+                <strong>Gagal tersimpan!</strong> Pastikan Semua Data yang diisi sudah benar.  Silahkan <a href="inputpenjualan.php"><button class="btn btn-outline-secondary">Coba Kembali</button></a> <br>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -190,10 +190,14 @@ if (!isset($_SESSION['userLogin'])) {
               <span class="input-group-text">Rp. </span>
             </div>
             <input id="harga_penjualan" type="number" class="form-control" aria-label="Harga Satuan" name="harga_penjualan" required="">
+
             <div class="input-group-append">
               <span class="input-group-text">.-</span>
             </div>
           </div>
+          <small class="form-text text-muted margin">Margin :</small>
+          
+
         </div>
 
         <div class="form-group col-sm-3">
@@ -213,12 +217,11 @@ if (!isset($_SESSION['userLogin'])) {
         <div class="form-group col-sm">
           <label for="jumlah">Tanggal</label>
           <input class="form-control form-control" type="date" required name="tgl_penjualan" value="<?php echo date("Y-m-d"); ?>">
-
         </div>
-
       </div>
-
+<hr/>
       <div class="row">
+
         <div class="col-sm-2">
           <button class="btn btn-primary simpanpenjualan" type="submit" name="simpanpenjualan" value="jualbarang"><span class="fa fa-shopping-cart"></span> Jual Barang</button>
         </div>
@@ -533,6 +536,13 @@ if (!isset($_SESSION['userLogin'])) {
               }); // Punya Ajax
           });
      // Akhir dari outfocus
+
+     $('input#harga_penjualan').keyup(function () {
+        var harga_modal = $('input#harga_modal').val();
+        var harga_penjualan = $('input#harga_penjualan').val();
+        var margin  =harga_penjualan - harga_modal;
+       $('small.margin').text('Margin : ' + margin );
+     })
 
      $('button#reset').click(function() {
       $('input#kode_barang').focus()
