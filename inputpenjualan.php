@@ -266,9 +266,9 @@ if (!isset($_SESSION['userLogin'])) {
   <!-- Optional JavaScript -->
   <script src="vendor/jquery/jquery-1.10.2.js"></script>
 
-
   <script src="vendor/jquery/jquery-ui.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="vendor/AYS/jquery.are-you-sure.js"></script>
 
 
   <!-- // Ambil kode Barang dari URL -->
@@ -331,6 +331,8 @@ if (!isset($_SESSION['userLogin'])) {
 <script>
 
   $(document).ready(function () {
+    $('form').areYouSure();
+    
     $('button.simpanpenjualan').attr('disabled','true');
 
     $('input#kode_barang').focus()
