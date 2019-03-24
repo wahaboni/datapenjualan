@@ -11,9 +11,11 @@ if (!isset($_SESSION['userLogin'])) {
   <!-- Custom fonts for this template -->
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-  <!-- Jquery -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Jquery -->  
+  <script src="vendor/jquery/jquery-1.10.2.js"></script>
 
+  <script src="vendor/jquery/jquery-ui.js"></script>
+  <!-- <script type="text/javascript" src="js/bootstrap.min.js"></script> -->
   
   <!-- Custom styles for this page -->
   
@@ -347,7 +349,6 @@ if (!isset($_SESSION['userLogin'])) {
 
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-
 
 <script src="vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>

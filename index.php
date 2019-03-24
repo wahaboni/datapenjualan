@@ -49,7 +49,16 @@ if (!isset($_SESSION['userLogin'])) {
                           <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                               <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Penjualan (Bulanan)</div>
-                              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp. 40.000.000</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp. 
+                              <?php 
+                              include 'koneksi.php';
+                              $bulan=date("Y-m");
+                              $total_penjualan="SELECT Sum(data_penjualan.harga_penjualan*data_penjualan.jumlah) AS total_penjualan FROM data_penjualan WHERE data_penjualan.tgl_penjualan LIKE '%$bulan%'";
+                              $data=mysqli_query($conn, $total_penjualan);
+                              $hasil=mysqli_fetch_array($data);
+                              echo number_format($hasil['total_penjualan'],0,",",".");
+                               ?>
+                              </div>
                           </div>
                           <div class="col-auto">
                               <i class="fas fa-calendar fa-2x text-gray-300"></i>
