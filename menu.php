@@ -59,7 +59,7 @@
 
       </li>
       <li class="nav-item">
-      <button class="btn btn-danger navbar-btn" data-toggle="modal" data-target="#konfirmasiLogout"><span class="fa fa-power-off"> </span> 
+      <button class="btn btn-danger navbar-btn" title="Keluar Aplikasi." data-toggle="modal" data-target="#konfirmasiLogout"><span class="fa fa-power-off"> </span> 
           Keluar
         </a></button>
       </li>

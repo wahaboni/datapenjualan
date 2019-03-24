@@ -67,7 +67,7 @@ if (!isset($_SESSION['userLogin'])) {
   <div class="container-fluid">
     <div class="row">
       <div class="col-5">
-        <h3><span class="fa fa-cash-register"></span> Data Penjualan</h3><br>
+        <h3><span class="fa fa-cash-register"></span> Data Semua Penjualan</h3><br>
       </div>
       <div class="col-3">
         <a href="lihatpenjualan.php"><button class="btn btn-info"><span class="fa fa-sync-alt"></span> Refresh Data (F5)</button></a>

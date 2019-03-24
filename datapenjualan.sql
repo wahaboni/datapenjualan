@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version 5.5.5-10.1.37-MariaDB)
-# Date: 2019-03-17 10:19:38
+# Date: 2019-03-25 03:23:46
 # Generator: MySQL-Front 6.1  (Build 1.26)
 
 
@@ -45,7 +45,7 @@ CREATE TABLE `data_barang` (
 # Data for table "data_barang"
 #
 
-INSERT INTO `data_barang` VALUES (1,'Acer Nitro 5','i5-8250U, RAM 8GB SSD 25GB Windows',8,'Acer',8200000,8700000,80000),(2,'Legion Y520 67ID','i7 ram 8GB gtx 1050 4GB',7,'Lenovo',13500000,13899000,100000),(3,'Flex 5','RAM 8GB MX130 2GB Windows',16,'Lenovo',12900000,13000000,100000),(4,'Miix 320','Intel Atom, 4GB, emmc 128GB',5,'Lenovo',3100000,3500000,50000),(6,'Asus X4004AU','i3 RAM 4GB HDD 500GB Windows resmi',4,'Asus',5900000,6300000,50000),(8,'Acer Aspire 3','Celeron RAM 4GB HDD 500GB',17,'Acer',3000000,3300000,0),(9,'Asus ROG GL552JX','GL552JX-XO139D',6,'Asus',8300000,8500000,100000),(12,'ThinkPad X1 Carbon','i7 RAM 8GB HDD 1TB SSD 256GB Windows',6,'Lenovo',1700000,17600000,100000),(13,'laptop hp 14s-cf0044tx','core i5-8250u - ram 4gb - hdd 1tb - vga r520',6,'HP',7700000,7900000,50000);
+INSERT INTO `data_barang` VALUES (1,'Acer Nitro 5','i5-8250U, RAM 8GB SSD 25GB Windows',6,'Acer',8200000,8700000,80000),(2,'Legion Y520 67ID','i7 ram 8GB gtx 1050 4GB',5,'Lenovo',13500000,13899000,100000),(3,'Flex 5','RAM 8GB MX130 2GB Windows',14,'Lenovo',12900000,13000000,100000),(4,'Miix 320','Intel Atom, 4GB, emmc 128GB',3,'Lenovo',3100000,3500000,50000),(6,'Asus X4004AU','i3 RAM 4GB HDD 500GB Windows resmi',1,'Asus',5900000,6300000,50000),(8,'Acer Aspire 3','Celeron RAM 4GB HDD 500GB',15,'Acer',3000000,3300000,0),(9,'Asus ROG GL552JX','GL552JX-XO139D',6,'Asus',8300000,8500000,100000),(12,'ThinkPad X1 Carbon','i7 RAM 8GB HDD 1TB SSD 256GB Windows',6,'Lenovo',1700000,17600000,100000),(13,'laptop hp 14s-cf0044tx','core i5-8250u - ram 4gb - hdd 1tb - vga r520',5,'HP',7700000,7900000,50000);
 
 #
 # Structure for table "status_penjualan"
@@ -86,10 +86,10 @@ CREATE TABLE `data_penjualan` (
   KEY `data_penjualan_ibfk_3` (`kode_status`),
   CONSTRAINT `data_penjualan_ibfk_2` FOREIGN KEY (`nama_akun`) REFERENCES `data_akun` (`nama_akun`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `data_penjualan_ibfk_3` FOREIGN KEY (`kode_status`) REFERENCES `status_penjualan` (`kode_status`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 #
 # Data for table "data_penjualan"
 #
 
-INSERT INTO `data_penjualan` VALUES (1,2,'Legion Y520 67ID',14000000,13500000,100000,'Offline',2,2,'2019-03-13','itstore'),(2,1,'Acer Nitro 5',9000000,8200000,80000,'Offline',2,2,'2019-03-13','itstore'),(3,11,'Anjing',1400000,1200000,10,'Offline',3,2,'2019-03-13','itstore'),(4,13,'like',3000,1000,0,'Offline',10,2,'2019-03-13','itstore'),(5,13,'like',5000,1000,0,'Offline',2,2,'2019-03-13','itstore'),(6,4,'Miix 320',4000000,3100000,50000,'Online',3,2,'2019-03-13','administrasi'),(7,13,'laptop hp 14s-cf0044tx',7800000,7700000,50000,'Online',2,2,'2019-03-14','itstore');
+INSERT INTO `data_penjualan` VALUES (1,3,'Flex 5',13500000,12900000,100000,'Offline',2,2,'2019-03-24','itstore'),(2,13,'laptop hp 14s-cf0044tx',8000000,7700000,50000,'Offline',3,2,'2019-03-24','itstore'),(3,8,'Acer Aspire 3',3450000,3000000,0,'Offline',2,2,'2019-03-24','itstore'),(4,4,'Miix 320',3500000,3100000,50000,'Offline',2,2,'2019-03-24','itstore'),(5,1,'Acer Nitro 5',8300000,8200000,80000,'Offline',2,2,'2019-03-24','itstore'),(6,6,'Asus X4004AU',6000000,5900000,150000,'Offline',3,2,'2019-03-24','itstore');

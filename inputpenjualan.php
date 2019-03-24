@@ -92,6 +92,8 @@ if (!isset($_SESSION['userLogin'])) {
             $jumlah=$_POST['jumlah'];
             $tgl_penjualan=$_POST['tgl_penjualan'];
 
+            $total_komisi=$komisi*$jumlah;
+
             $nama_akun=$_SESSION['userLogin'];
             if ($simpanpenjualan=='bookingbarang'){
               $kode_status=1;
@@ -100,7 +102,7 @@ if (!isset($_SESSION['userLogin'])) {
             }
 
             include_once 'koneksi.php';
-            $query="INSERT INTO data_penjualan (kode_barang, nama_barang, harga_penjualan, harga_modal, komisi, jenis_penjualan, jumlah, kode_status, tgl_penjualan, nama_akun) VALUES ('$kode_barang', '$nama_barang', '$harga_penjualan', '$harga_modal', '$komisi', '$jenis_penjualan', '$jumlah', '$kode_status', '$tgl_penjualan', '$nama_akun')";
+            $query="INSERT INTO data_penjualan (kode_barang, nama_barang, harga_penjualan, harga_modal, komisi, jenis_penjualan, jumlah, kode_status, tgl_penjualan, nama_akun) VALUES ('$kode_barang', '$nama_barang', '$harga_penjualan', '$harga_modal', '$total_komisi', '$jenis_penjualan', '$jumlah', '$kode_status', '$tgl_penjualan', '$nama_akun')";
             if ($conn->query($query) ==TRUE) {
 
               $cekstok="SELECT stok FROM data_barang where kode_barang='$kode_barang'";
