@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version 5.5.5-10.1.37-MariaDB)
-# Date: 2019-03-25 03:23:46
+# Date: 2019-03-26 10:05:25
 # Generator: MySQL-Front 6.1  (Build 1.26)
 
 
@@ -22,7 +22,7 @@ CREATE TABLE `data_akun` (
 # Data for table "data_akun"
 #
 
-INSERT INTO `data_akun` VALUES (1001,'administrasi','Administrasi','admin789','1'),(1002,'gudang','Gudang','12345','2'),(1003,'itstore','IT Store - Karawaci','112233','3');
+INSERT INTO `data_akun` VALUES (1001,'administrasi','Administrasi','admin789','1'),(1002,'gudang','Gudang','12345','3'),(1003,'itstore','IT Store - Karawaci','112233','4');
 
 #
 # Structure for table "data_barang"
