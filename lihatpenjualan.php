@@ -167,8 +167,9 @@ if (!isset($_SESSION['userLogin'])) {
     </table>
   </div> <!-- table responsive -->
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+  <!-- Modal Ubah Data -->
+  <div class="modal fade" id="ModalEditData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -249,6 +250,7 @@ if (!isset($_SESSION['userLogin'])) {
 
 
 
+
 <!-- Awal Modal  lihatdata-->
   <div class="modal fade" id="Modallihatdata" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -279,13 +281,13 @@ if (!isset($_SESSION['userLogin'])) {
                 <tr>
                   <td><label for="">Harga Modal</label></td>
                   <td>:</td>
-                  <td><label id="harga_modal"></label></td>
+                  <td><label id="harga_modal" class="divide"></label></td>
                 </tr>
 
                 <tr>
                   <td><label for="">Harga Penjualan</label></td>
                   <td>:</td>
-                  <td><label id="harga_penjualan"></label></td>
+                  <td><label id="harga_penjualan" class="divide"></label></td>
                 </tr>
 
                  <tr>
@@ -297,13 +299,13 @@ if (!isset($_SESSION['userLogin'])) {
                 <tr>
                   <td><label for="">Margin</label></td>
                   <td>:</td>
-                  <td><label id="margin"></label></td>
+                  <td><label id="margin" class="divide"></label></td>
                 </tr>
 
                 <tr>
                   <td><label for="">Komisi</label></td>
                   <td>:</td>
-                  <td><label id="komisi"></label></td>
+                  <td><label id="komisi" class="divide"></label></td>
                 </tr>
 
                 <tr>
@@ -355,6 +357,8 @@ if (!isset($_SESSION['userLogin'])) {
 
 <script src="js/demo/datatables-demo.js"></script>
 
+<script type="text/javascript" src="js/number-divider.js"></script>
+
 <script text="text/javascript">
   $(document).ready(function () {
     $('table#dataTable tr#booked td').attr("title","Penjualan ini masih dalam Status Booking / Hold");
@@ -400,6 +404,10 @@ if (!isset($_SESSION['userLogin'])) {
           modal.find('.modal-body label#jumlah').html(data.jumlah);
           modal.find('.modal-body label#tgl_penjualan').html(data.tgl_penjualan);
 
+          $('.divide').divide({
+          delimiter:'.',
+          divideThousand:true
+          });
          
                   //menampilkan data ke dalam modal
                 }
@@ -410,9 +418,9 @@ if (!isset($_SESSION['userLogin'])) {
 
     $(document).on('click','.ubahdata', function () {
       var kode_penjualan=$(this).attr("id");
-      $('#exampleModal').modal('show');
+      $('#ModalEditData').modal('show');
 
-      var modal = $('#exampleModal')
+      var modal = $('#ModalEditData')
       modal.find('.modal-title').text('Ubah Data Penjualan');
       modal.find('.modal-body input#kode_penjualan').val(kode_penjualan);
 
@@ -435,14 +443,19 @@ if (!isset($_SESSION['userLogin'])) {
           modal.find('.modal-body input#margin').val((margin)*data.jumlah);
           modal.find('.modal-body input#total').val(data.harga_penjualan*data.jumlah);
 
+
                   //menampilkan data ke dalam modal
                 }
         }); // Punya Ajax
 
         $(modal.find('.modal-body input#harga_penjualan')).keyup(function () {  // Ketika Input Harga Penjualan ditulis
-          var harga_modal = modal.find('.modal-body input#harga_modal').val()
+          $('this').divide({
+          delimiter:'.',
+          divideThousand:true
+          });
+          var harga_modal = modal.find('.modal-body input#harga_modal').val();
 
-          var hitung = $(this).val() - harga_modal
+          var hitung = $(this).val() - harga_modal;
           modal.find('.modal-body input#margin').val(hitung)
         })
 
@@ -474,6 +487,7 @@ if (!isset($_SESSION['userLogin'])) {
 
 
 </script>
+
 
 </body>
 </html>
